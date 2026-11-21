@@ -6,10 +6,14 @@
 // the cases' order. Outside a container MAKEFUN_INPUT_DIR and
 // MAKEFUN_OUTPUT_DIR stand in for /input and /output.
 //
+// run() keeps all of its state inside one call, so cases are independent:
+// nothing leaks from one case into the next, and the answers come out in
+// the cases' order whatever the input holds.
+//
 // V8's incremental marking is turned off before solve.js is imported, the
-// way the house baseline's driver runs: with the plain reader's values
-// being chains of joined strings, marking them a step at a time costs
-// wall time on the grader's box.
+// way the house baseline's driver runs. The slow tier builds field values
+// by concatenation, so marking those chains a step at a time costs wall
+// time on the grader's box; turning it off is free speed.
 
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
